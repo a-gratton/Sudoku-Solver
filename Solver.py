@@ -2,15 +2,17 @@ import random
 
 
 def main():
-    grid = [[0]*9 for i in range(9)]
+    # random grid generation driver code
+    grid = [[0] * 9 for i in range(9)]
     for index, row in enumerate(grid):
         for i in range(len(row)):
-            if not random.randrange(0, 2):
+            if not random.randrange(0, 4):
                 temp = random.randrange(0, 10)
                 if isValid(grid, index, i, temp):
                     row[i] = temp
         print(row)
     print("\n")
+
     if solve(grid):
         for row in grid:
             print(row)
@@ -20,13 +22,16 @@ def main():
 
 def solve(grid):
     row, col, flag = getNext(grid)
-    if not flag: return True
+    if not flag:
+        return True
     else:
-        for i in range(1, len(grid)+1):
+        for i in range(1, len(grid) + 1):
             if isValid(grid, row, col, i):
                 grid[row][col] = i
-                if solve(grid): return True
-                else: grid[row][col] = 0
+                if solve(grid):
+                    return True
+                else:
+                    grid[row][col] = 0
     return False
 
 
