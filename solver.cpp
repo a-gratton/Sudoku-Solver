@@ -10,6 +10,7 @@ using namespace std;
 class Sudoku {
  public:
 
+ 	//function to accept grid input from file
 	void input(istream &in) {
 		for (int i = 0; i < MAX; i++) {
 			for (int j = 0; j < MAX; j++) {
@@ -19,6 +20,7 @@ class Sudoku {
 		}
 	}
 
+	//function to output grid
 	void output(ostream &out) {
 		for (int i = 0; i < MAX; i++) {
 			for (int j = 0; j < MAX; j++) {
@@ -34,10 +36,12 @@ class Sudoku {
 		}
 	}
 
+	//main recursive backtracking function
+	//traverses depth first, backtracking if no valid solutions are possible on current branch
 	bool solve() {
 		int row = 0, col = 0;
 		if (!nextEmpty(row, col)) {
-			return 1;
+			return true; //a solution has been found
 		}
 
 		for (int i = 1; i < MAX + 1; i++) {
@@ -50,9 +54,10 @@ class Sudoku {
 				}
 			}
 		}
-		return 0;
+		return false; //a solution is impossible
 	}
 
+	//public function to call placement checking helper functions
 	bool isValid(int num, int row, int col) {
 		if (grid[row][col]) { //if spot has already been assigned
 			return 0;
@@ -65,34 +70,41 @@ class Sudoku {
 	int grid[MAX][MAX];
 	int edit[MAX][MAX];
 
+	//determines if placement is valid in current row
 	bool checkRow(int num, int row) {
 		for (int i = 0; i < MAX; i++) {
 			if (grid[row][i] == num) {
-				return 0;
+				return false;
 			}
 		}
-		return 1;
+		return true;
 	}
+
+	//determines if placement is valid in current column
 	bool checkCol(int num, int col) {
 		for (int i = 0; i < MAX; i++) {
 			if (grid[i][col] == num) {
-				return 0;
+				return false;
 			}
 		}
-		return 1;
+		return true;
 	}
+
+	//determines if placement is valid in current grid square
 	bool checkSquare(int num, int row, int col) {
 		int rowStart = (row < 3 ? 0 : row < 6 ? 3 : 6);
 		int colStart = (col < 3 ? 0 : col < 6 ? 3 : 6);
 		for (int i = rowStart; i < rowStart + 3; i++) {
 			for (int j = colStart; j < colStart + 3; j++) {
 				if (grid[i][j] == num) {
-					return 0;
+					return false;
 				}
 			}
 		}
-		return 1;
+		return true;
 	}
+
+	//finds next empty space in grid
 	bool nextEmpty(int &row, int &col) {
 		for (int i = 0; i < MAX; i++) {
 			for (int j = 0; j < MAX; j++) {
@@ -107,6 +119,7 @@ class Sudoku {
 	}
 };
 
+//driver code
 int main() {
 	ifstream fin("grid.txt");
 	Sudoku obj;
