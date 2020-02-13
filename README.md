@@ -30,3 +30,10 @@ obj.output(cout);
 ### Python
 
 The Python implementation includes driver code to generate and solve random grids. If you want to solve a specific puzzle, define it as a two-dimensional list called `grid` at the top of main.
+
+The python implementation also supports arbitrary sized grids! Try it out with a 16x16 puzzle.
+
+
+## License
+This project is licensed under the terms of the MIT license.
+
